@@ -1,0 +1,56 @@
+--Q1
+select count(distinct(callernumber))
+from calls;
+
+--Q2
+select callernumber,count(callernumber)
+from calls
+group by callernumber
+having  count(callernumber)>10;
+
+--Q3
+select callernumber,sum(duration) as ss 
+from calls
+group by callernumber
+order by ss desc
+Limit 1 ;
+
+--Q4
+Select  receivernumber,count(receivernumber) as cc
+From calls
+group by receivernumber
+order by cc  desc
+limit 1;
+
+
+
+--Q5
+select *
+from messages
+order by length desc 
+limit 10;
+
+--Q6
+
+select hour, count(hour) 
+from messages
+group by hour
+order by hour desc
+limit 1;
+
+--Q7
+select hour, avg(duration)
+from calls
+group by hour;
+
+--Q8
+select m.callernumber 
+from messages m ,
+( select c.callernumber 
+from calls c 
+ group by c.callernumber
+ having count(c.callernumber)>3 ) as t
+ where m.callernumber=t.callernumber
+ group by m.callernumber
+ having count(m.callernumber)>2 ;
+
